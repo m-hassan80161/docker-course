@@ -1,12 +1,12 @@
 # Node.js Dockerized App
 
-مشروع Node.js بسيط معتمد على Docker.
+A simple Node.js project built with Docker.
 
-## المتطلبات (Prerequisites)
-* Docker مثبت على الجهاز.
+## Prerequisites
+* Docker installed on your system.
 
-## طريقة التشغيل باستخدام Docker
+## How to Run Using Docker
 
-1. **بناء Docker Image:**
+1. **Build Docker Image:**
 ```bash
 docker build -t node-app .
