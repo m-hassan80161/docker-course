@@ -5,7 +5,7 @@ FROM node:24.19.0
 WORKDIR /app
 
 # copy package.json to working app
-COPY package.json /app/
+COPY package.json /app
 
 # Run install npm 
 RUN npm install
@@ -18,4 +18,4 @@ COPY . .
 EXPOSE 4000
 
 # command to run app is store in package.json in scripts 
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "start-dev" ]
