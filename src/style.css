@@ -1,0 +1,241 @@
+* {
+  box-sizing: border-box;
+  }
+
+body {
+font-family: Arial, sans-serif;
+
+background-color: #0f172a;
+
+color: #f8fafc;
+
+margin: 0;
+
+padding: 40px;
+}
+
+/* =========================
+Container
+========================= */
+
+.container {
+max-width: 1000px;
+
+margin: auto;
+}
+
+/* =========================
+Main Title
+========================= */
+
+h1 {
+color: #38bdf8;
+
+text-align: center;
+
+margin-bottom: 30px;
+}
+
+/* =========================
+Card
+========================= */
+
+.card {
+background-color: #1e293b;
+
+padding: 25px;
+
+border-radius: 12px;
+
+margin-bottom: 25px;
+}
+
+.card h2 {
+margin-top: 0;
+
+color: #e2e8f0;
+}
+
+/* =========================
+Form
+========================= */
+
+form {
+display: grid;
+
+grid-template-columns: repeat(3, 1fr);
+
+gap: 15px;
+}
+
+/* =========================
+Inputs
+========================= */
+
+input {
+width: 100%;
+
+padding: 12px;
+
+border: none;
+
+border-radius: 6px;
+
+font-size: 16px;
+
+outline: none;
+}
+
+input:focus {
+box-shadow: 0 0 0 2px #38bdf8;
+}
+
+/* =========================
+Buttons
+========================= */
+
+button {
+border: none;
+
+padding: 10px 16px;
+
+border-radius: 6px;
+
+cursor: pointer;
+
+font-size: 14px;
+
+color: white;
+}
+
+/* Add Button */
+
+.add-btn {
+background-color: #16a34a;
+
+grid-column: span 3;
+}
+
+.add-btn:hover {
+background-color: #15803d;
+}
+
+/* Edit Button */
+
+.edit-btn {
+background-color: #0284c7;
+}
+
+.edit-btn:hover {
+background-color: #0369a1;
+}
+
+/* Delete Button */
+
+.delete-btn {
+background-color: #dc2626;
+}
+
+.delete-btn:hover {
+background-color: #b91c1c;
+}
+
+/* =========================
+Status
+========================= */
+
+.status {
+text-align: center;
+
+padding: 10px;
+
+margin-bottom: 20px;
+
+border-radius: 6px;
+
+background-color: #334155;
+}
+
+/* =========================
+Table
+========================= */
+
+table {
+width: 100%;
+
+border-collapse: collapse;
+
+margin-top: 10px;
+}
+
+th,
+td {
+padding: 14px;
+
+text-align: left;
+
+border-bottom: 1px solid #334155;
+}
+
+th {
+color: #38bdf8;
+}
+
+td {
+color: #cbd5e1;
+}
+
+/* =========================
+Actions
+========================= */
+
+.actions {
+display: flex;
+
+gap: 8px;
+}
+
+/* =========================
+Empty Table
+========================= */
+
+.empty {
+text-align: center;
+
+padding: 30px;
+
+color: #94a3b8;
+}
+
+/* =========================
+Responsive
+========================= */
+
+@media (max-width: 700px) {
+
+body {
+padding: 20px;
+}
+
+form {
+grid-template-columns: 1fr;
+}
+
+.add-btn {
+grid-column: span 1;
+}
+
+table {
+font-size: 13px;
+}
+
+th,
+td {
+padding: 8px;
+}
+
+.actions {
+flex-direction: column;
+}
+
+}

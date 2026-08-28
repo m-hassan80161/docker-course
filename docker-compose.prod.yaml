@@ -1,0 +1,15 @@
+version: "3"
+services:
+  node-app:
+    container_name: "testnodeapp"
+    build:
+      context: .
+      target: production
+    volumes:
+      - ./src:/app/src:ro
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=PRODUCTION
+    env_file:
+      - .env

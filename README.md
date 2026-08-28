@@ -10,3 +10,6 @@ A simple Node.js project built with Docker.
 1. **Build Docker Image:**
 ```bash
 docker build -t node-app .
+
+
+
