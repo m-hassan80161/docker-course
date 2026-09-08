@@ -1,7 +1,6 @@
 
 services:
   node-app:
-    container_name: "testapp1"
     image: muhammed8016/newapp
     build: .
     
@@ -28,9 +27,16 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
 
   web:
-    container_name: web
+    image: my-nginx-web:latest
     build:
       context: nginx/.
     ports:
@@ -89,14 +95,14 @@ services:
   redis:
     image: redis
 
-  watchtower:
-    image: containrrr/watchtower
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - WATCHTOWER_TRACE=true
-      - WATCHTOWER_POLL_INTERVAL=true
-    command: testapp1
+  # watchtower:
+  #   image: containrrr/watchtower
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   environment:
+  #     - WATCHTOWER_TRACE=true
+  #     - WATCHTOWER_POLL_INTERVAL=true
+  #   command: testapp1
 
     
 
