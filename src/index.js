@@ -3,6 +3,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import redis from 'redis';
 import pg from 'pg';
+import os from 'os';
 
 
 
@@ -82,7 +83,8 @@ app.get("/", async (req, res) => {
     const result = await pool.query("SELECT NOW()");
     const dbTime = result.rows[0].now;
     redisClient.set('prodact','RAMs')
-    res.send(`<h1>hello from test app ${dbTime} hi hi2 hi3</h1>`);
+    console.log(`trafic from: ${os.hostname}`);
+    res.send(`<h1>hello from WatchTowr 112122 Test</h1>`);
   } catch (error) {
     console.log("تفاصيل الخطأ:", error); // <-- اضف السطر ده
     res.status(500).send("حدث خطأ أثناء جلب البيانات");
@@ -107,7 +109,7 @@ app.get("/prodact", async (req, res) => {
   }
   
   
-});
+}); 
 
 
 app.listen(PORT, () => {

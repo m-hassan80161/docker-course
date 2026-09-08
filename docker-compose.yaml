@@ -1,16 +1,33 @@
-version : "3"
 
 services:
   node-app:
     container_name: "testapp1"
     image: muhammed8016/newapp
     build: .
-    ports:
-     - "4000:4000"
+    
     env_file:
       - .env
     depends_on:
       - db
+
+    deploy:
+      mode: replicated       # 'replicated' (fixed number) or 'global' (one per node)
+      replicas: 4            # Total instances running across the cluster
+
+      placement:
+        max_replicas_per_node: 1
+
+      update_config:
+        parallelism: 2       # Number of containers to update at a time
+        delay: 10s           # Time to wait between updating container groups
+        order: start-first   # Rolling update strategy: 'start-first' or 'stop-first'
+        failure_action: rollback # What to do if the update fails
+
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
 
   web:
     container_name: web
@@ -72,11 +89,22 @@ services:
   redis:
     image: redis
 
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_TRACE=true
+      - WATCHTOWER_POLL_INTERVAL=true
+    command: testapp1
+
     
 
 volumes:
   mongo_db:
   postgres_data:
+
+
 
   
 
