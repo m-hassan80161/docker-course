@@ -89,14 +89,7 @@ services:
   redis:
     image: redis
 
-  watchtower:
-    image: containrrr/watchtower
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - WATCHTOWER_TRACE=true
-      - WATCHTOWER_POLL_INTERVAL=true
-    command: testapp1
+ 
 
     
 
