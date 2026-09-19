@@ -1,0 +1,141 @@
+
+services:
+  node-app:
+    image: muhammed8016/newapp
+    build: .
+    
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+    deploy:
+      mode: replicated       # 'replicated' (fixed number) or 'global' (one per node)
+      replicas: 4            # Total instances running across the cluster
+
+      placement:
+        max_replicas_per_node: 1
+
+      update_config:
+        parallelism: 2       # Number of containers to update at a time
+        delay: 10s           # Time to wait between updating container groups
+        order: start-first   # Rolling update strategy: 'start-first' or 'stop-first'
+        failure_action: rollback # What to do if the update fails
+
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  web:
+    image: my-nginx-web:latest
+    build:
+      context: nginx/.
+    ports:
+    - "8080:80"
+    depends_on:
+      - node-app
+
+
+  db:
+    image: postgres
+    restart: always
+    # set shared memory limit when using docker compose
+    shm_size: 128mb
+    # or set shared memory limit when deploy via swarm stack
+    #volumes:
+    #  - type: tmpfs
+    #    target: /dev/shm
+    #    tmpfs:
+    #      size: 134217728 # 128*2^20 bytes = 128Mb
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: example
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8085:8080
+
+  # mongo:
+  #   image: mongo:6
+  #   restart: always
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: example
+  #     MONGO_TCMALLOC_PER_CPU_CACHE_SIZE_BYTES: "0"
+  #     GLIBC_TUNABLES: "glibc.pthread.rseq=0"
+  #   volumes:
+  #     - mongo_db:/data/db
+
+  # mongo-express:
+  #   image: mongo-express
+  #   restart: always
+  #   ports:
+  #     - 8081:8081
+  #   environment:
+  #     ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+  #     ME_CONFIG_BASICAUTH_ENABLED: true
+  #     ME_CONFIG_BASICAUTH_USERNAME: root
+  #     ME_CONFIG_BASICAUTH_PASSWORD: example
+  #   depends_on:
+  #     - mongo
+
+  redis:
+    image: redis
+
+  # watchtower:
+  #   image: containrrr/watchtower
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   environment:
+  #     - WATCHTOWER_TRACE=true
+  #     - WATCHTOWER_POLL_INTERVAL=true
+  #   command: testapp1
+
+    
+
+volumes:
+  mongo_db:
+  postgres_data:
+
+
+
+  
+
+  # postgres:
+  #   image: postgres
+  #   restart: always
+  #   # set shared memory limit when using docker compose
+  #   shm_size: 128mb
+  #   # or set shared memory limit when deploy via swarm stack
+  #   #volumes:
+  #   #  - type: tmpfs
+  #   #    target: /dev/shm
+  #   #    tmpfs:
+  #   #      size: 134217728 # 128*2^20 bytes = 128Mb
+  #   environment:
+  #     POSTGRES_USER : root
+  #     POSTGRES_PASSWORD: example
+  #   depends_on:
+  #     - node-app
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8085:8080
+
+
+    
+    

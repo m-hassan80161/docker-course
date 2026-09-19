@@ -1,5 +1,5 @@
 # Download base Image
-FROM node:24.19.0 
+FROM node:latest AS base
 
 # creat Working Dir
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json /app/
 
 # Run install npm 
-RUN npm install
+RUN npm install --only=production
 
 # copy sorce code like index.js to container
 COPY . .
@@ -19,3 +19,4 @@ EXPOSE 4000
 
 # command to run app is store in package.json in scripts 
 CMD [ "npm", "start" ]
+
