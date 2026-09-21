@@ -11,24 +11,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: print job and workflow name
-        run: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
-
+        run: echo "From job  "
   build2:
     runs-on: ubuntu-latest
     steps:
       - name: print job and workflow name
-        run: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
+        run: echo "From job  "
 
   build3:
     needs: build2
     runs-on: ubuntu-latest
     steps:
       - name: print job and workflow name
-        run: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
+        run: echo "From job "
 
   build4:
     needs: [build3, build]
     runs-on: ubuntu-latest
     steps:
       - name: print job and workflow name
-        run: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
+        run: echo "From job "
