@@ -6,22 +6,35 @@ on:
   pull_request:
     branches: [ "main" ]
 
-jobs:
+jobs1:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [22.x, 24.x]
-
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        - name: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
+          run: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
 
-    - run: npm ci
-    - run: npm run build --if-present
+jobs2:
+    build2:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
+              run: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
+jobs3:
+    build3:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
+              run: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
+    needs: [build2]
+
+jobs4:
+    build4:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
+              run: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
+    needs: [build3, build1]
