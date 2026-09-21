@@ -2,39 +2,33 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
-jobs1:
+jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-        - name: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
-          run: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
+      - name: print job and workflow name
+        run: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
 
-jobs2:
-    build2:
-        runs-on: ubuntu-latest
+  build2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: print job and workflow name
+        run: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
 
-        steps:
-            - name: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
-              run: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
-jobs3:
-    build3:
-        runs-on: ubuntu-latest
+  build3:
+    needs: build2
+    runs-on: ubuntu-latest
+    steps:
+      - name: print job and workflow name
+        run: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
 
-        steps:
-            - name: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
-              run: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
-    needs: [build2]
-
-jobs4:
-    build4:
-        runs-on: ubuntu-latest
-
-        steps:
-            - name: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
-              run: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
-    needs: [build3, build1]
+  build4:
+    needs: [build3, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: print job and workflow name
+        run: echo "From job name: ${{ github.job }} and workflow name: ${{ github.workflow }}"
