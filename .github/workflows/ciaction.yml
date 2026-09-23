@@ -7,11 +7,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         - name: print job and workflow name
-            run: echo "From job from runner"
+          run: echo "From job from runner"
 
         - name: print job from docker
-            uses: docker://alpine:3.17
-            with:
+          uses: docker://alpine:3.17
+          with:
             entrypoint: /bin/sh
             args: -c "echo 'From job from docker'" 
 
