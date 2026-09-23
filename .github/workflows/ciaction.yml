@@ -9,3 +9,9 @@ jobs:
         steps:
             - name: print job and workflow name
               run: echo "From job name"
+              
+            - name: print from docker
+              uses: docker://alpine::3.17
+              with:
+                entrypoint: /bin/sh
+                args: -c "echo 'From docker image'"
