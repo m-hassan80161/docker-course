@@ -1,29 +1,50 @@
 name: use docker action
+
 on:
-    workflow_dispatch:
-
-
+  workflow_dispatch:
 
 jobs:
-    hypredJob:
-        runs-on: ubuntu-latest
-        steps:
-            - name: print job and workflow name
-              run: echo "From job name"
-              
-            - name: print from docker
-              uses: docker://alpine:3.17
-              with:
-                entrypoint: /bin/sh
-                args: -c "echo 'From docker image'"
 
-    dockerized_job:
-        needs: hypredJob
-        runs-on: ubuntu-latest
-        container:
-            image: node:23
-        steps:
-            - name: node version
-              run: node -v
-            - name: print job and workflow name
-              run: echo "From job name"
+  hypredJob:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: print job and workflow name
+        run: echo "From job name"
+
+      - name: print from docker
+        uses: docker://alpine:3.17
+        with:
+          entrypoint: /bin/sh
+          args: -c "echo 'From docker image'"
+
+
+  dockerized_job:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Cache Node Docker image
+        id: node-cache
+        uses: actions/cache@v6
+        with:
+          path: /tmp/node-image.tar
+          key: node-23-${{ runner.os }}
+
+      - name: Load Node image from cache
+        if: steps.node-cache.outputs.cache-hit == 'true'
+        run: docker load -i /tmp/node-image.tar
+
+      - name: Pull Node image
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: docker pull node:23
+
+      - name: Save Node image to cache
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: docker save node:23 -o /tmp/node-image.tar
+
+      - name: Run Node container
+        run: docker run --rm node:23 node -v
+
+      - name: Run command inside Node
+        run: docker run --rm node:23 node -e "console.log('Hello from Node container')"
