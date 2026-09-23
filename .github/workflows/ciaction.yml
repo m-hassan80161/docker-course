@@ -18,6 +18,7 @@ jobs:
                 args: -c "echo 'From docker image'"
 
     dockerized_job:
+        needs: hypredJob
         runs-on: ubuntu-latest
         container:
             image: node:23
