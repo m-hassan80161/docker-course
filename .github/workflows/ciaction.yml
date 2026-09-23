@@ -1,0 +1,20 @@
+name: ci actions
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  hypred_jobs:
+    runs-on: ubuntu-latest
+        steps:
+        - name: print job and workflow name
+          run: echo "Run From Runner"
+
+        - name: print job and workflow name from docker
+            uses: docker://alpine:3.17
+            with:
+              entrypoint: /bin/sh
+              args: -c "echo 'Run From Docker'" 
+
+              
