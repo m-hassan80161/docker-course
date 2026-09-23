@@ -16,3 +16,13 @@ jobs:
               with:
                 entrypoint: /bin/sh
                 args: -c "echo 'From docker image'"
+
+    dockerized_job:
+        runs-on: ubuntu-latest
+        container:
+            image: node:23
+        steps:
+            - name: node version
+              run: node -v
+            - name: print job and workflow name
+              run: echo "From job name"
