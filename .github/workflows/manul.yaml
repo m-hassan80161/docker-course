@@ -1,0 +1,20 @@
+name: Node.js CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  job_1:
+    strategy:
+      matrix:
+        os: 
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest]
+        node-version: [22.x, 23.x, 24.x]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: node -v
